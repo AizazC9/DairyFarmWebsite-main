@@ -18,11 +18,11 @@ Welcome to the DairyFarm website repository! This website is designed to help da
 
 ### Add Cattle Page
 
-![Add Cattle Page](screenshots/addCattle.png)
+![Add Cattle Page](screenshots/AddCattle.png)
 
 ### Edit Cattle Page
 
-![Edit Cattle Page](screenshots/editCattle.png)
+![Edit Cattle Page](screenshots/EditCattle.png)
 
 ### Print Cattle Details
 
