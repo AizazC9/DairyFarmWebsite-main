@@ -1,0 +1,192 @@
+﻿@model List<DairyFarm.Models.Domain.Cattle>
+
+@{
+    int totalCows = Model?.Count ?? 0;
+
+    int totalDailyMilk = 0;
+    float totalTemperature = 0;
+    int totalPrice = 0;
+    int totalNormalDeliveries = 0;
+    int totalAbortions = 0;
+    int totalAge = 0;
+
+    if (Model != null)
+    {
+        foreach (var cattle in Model)
+        {
+            totalDailyMilk += cattle.DailyMilk;
+            totalTemperature += cattle.Temperature;
+            totalPrice += cattle.Price;
+            if (cattle.NormalDelivery != 0)
+            {
+                totalNormalDeliveries++;
+            }
+            if (cattle.Abortion != 0)
+            {
+                totalAbortions++;
+            }
+            totalAge += cattle.Age;
+        }
+    }
+
+   var averageAge = totalCows > 0 ? totalAge / totalCows : 0;
+    var averagePrice = totalCows > 0 ? totalPrice / totalCows : 0;
+
+    float averageTemperature = totalCows > 0 ? totalTemperature / totalCows : 0;
+}
+
+<div class="milk-container">
+    <div class="milk-card">
+        <h2>Daily Milk</h2>
+        <p id="daily-milk-value">@totalDailyMilk L</p>
+    </div>
+    <div class="milk-card">
+        <h2>Weekly Milk</h2>
+        <p id="weekly-milk-value">@(totalDailyMilk * 7) L</p>
+    </div>
+    <div class="milk-card">
+        <h2>Monthly Milk</h2>
+        <p id="monthly-milk-value">@(totalDailyMilk * 7 * 4) L</p>
+    </div>
+    <div class="milk-card">
+        <h2>Annual Milk</h2>
+        <p id="annual-milk-value">@(totalDailyMilk * 7 * 4 * 12) L</p>
+    </div>
+</div>
+
+<div class="grid">
+    <div class="milk-container">
+        <div class="milk-chart">
+            <canvas id="milkChart"></canvas>
+        </div>
+    </div>
+
+    <div class="details">
+        <div class="summary-box">
+            <h2>Summary</h2>
+            <div class="summary-boxes">
+                <div class="summary-boxes-box">
+                    <p>Total Cows</p>
+                    <h3>@totalCows</h3>
+                </div>
+                <div class="summary-boxes-box">
+                    <p>Average Temperature</p>
+                    <h3>@averageTemperature °</h3>
+                </div>
+                <div class="summary-boxes-box">
+                    <p>Average Price</p>
+                    <h3>@averagePrice PKR</h3>
+                </div>
+                <div class="summary-boxes-box">
+                    <p>Normal Deliveries</p>
+                    <h3>@totalNormalDeliveries</h3>
+                </div>
+                <div class="summary-boxes-box">
+                    <p>Abortions</p>
+                    <h3>@totalAbortions</h3>
+                </div>
+                <div class="summary-boxes-box">
+                    <p>Average Age</p>
+                    <h3>@averageAge</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@{
+    var labels = new List<string>() { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+    var data = Model?.Select(cattle => cattle.DailyMilk).ToList() ?? new List<int>();
+    int totalAnnualMilk = data.Sum() * 12;
+}
+
+<style>
+    .milk-chart {
+        width: 800px;
+        height: 400px;
+    }
+</style>
+<script>
+    var labels = @Html.Raw(Json.Serialize(labels));
+    var data = @Html.Raw(Json.Serialize(data));
+    var totalAnnualMilk = @totalAnnualMilk;
+
+    var ctx = document.getElementById('milkChart').getContext('2d');
+    var chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Monthly Milk',
+                data: data,
+                backgroundColor: generateGradient(ctx, '#ff6384', '#36a2eb'),
+                hoverBackgroundColor: generateGradient(ctx, '#ff6384', '#36a2eb', 0.8),
+                borderColor: 'rgba(0, 0, 0, 0)',
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: {
+                duration: 2000,
+                easing: 'easeOutElastic'
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        font: {
+                            size: 14,
+                            weight: 'bold'
+                        }
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: 'rgba(0, 0, 0, 0.1)'
+                    },
+                    ticks: {
+                        stepSize: 100,
+                        font: {
+                            size: 14,
+                            weight: 'bold'
+                        }
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    titleFont: {
+                        size: 16,
+                        weight: 'bold'
+                    },
+                    bodyFont: {
+                        size: 14
+                    },
+                    callbacks: {
+                        label: function (context) {
+                            var label = context.dataset.label || '';
+                            var value = context.parsed.y || 0;
+                            return label + ': ' + value + ' liters';
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    function generateGradient(ctx, color1, color2, opacity = 1) {
+        var gradient = ctx.createLinearGradient(0, 0, 0, ctx.canvas.height);
+        gradient.addColorStop(0, color1);
+        gradient.addColorStop(1, color2);
+        return gradient;
+    }
+</script>

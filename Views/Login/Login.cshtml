@@ -1,0 +1,9 @@
+@{
+    Layout = "~/Views/Shared/_Login.cshtml";
+}
+
+<form asp-action="Login" method="post" class="login-form container">
+            <input type="text" class="fields" placeholder="Enter your Id" name="username" autocomplete="off" required>
+            <input type="text" class="fields" placeholder="Enter your password" name="password" autocomplete="off" required>
+            <button type="submit" class="btn">Login</button>
+</form>

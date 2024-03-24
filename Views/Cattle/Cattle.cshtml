@@ -1,0 +1,65 @@
+﻿@model List<DairyFarm.Models.Domain.Cattle>
+
+<div class="row">
+    <div class="col-md-4">
+        <h3>Tags</h3>
+        <ul class="tag-list">
+            @foreach (var cattle in Model)
+            {
+                <li><a href="#cattle-@cattle.Id" class="tag-link tag">@cattle.Tag</a></li>
+            }
+        </ul>
+    </div>
+    <div class="col-md-8">
+        <div class="values-container">
+            @foreach (var cattle in Model)
+            {
+                <div id="cattle-@cattle.Id" class="card cattle-card">
+                    <div class="card-header">
+                        <h3 class="tag animated fadeIn">@cattle.Tag</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="cattle-info animated fadeIn">
+                            <p><strong class="info-label">Age:</strong> @cattle.Age</p>
+                            <p><strong class="info-label">Weight:</strong> @cattle.Weight Kg</p>
+                            <p><strong class="info-label">Daily Milk:</strong> @cattle.DailyMilk L</p>
+                            <p><strong class="info-label">Normal Delivery:</strong> @cattle.NormalDelivery</p>
+                            <p><strong class="info-label">Abortion:</strong> @cattle.Abortion</p>
+                            <p><strong class="info-label">Diseases:</strong> @cattle.Diseases</p>
+                            <p><strong class="info-label">Diet Plan:</strong> @cattle.DietPlan</p>
+                            <p><strong class="info-label">Bull Insemination:</strong> @cattle.Insemination</p>
+                            <p><strong class="info-label">Examination:</strong> @cattle.Examination</p>
+                            <p><strong class="info-label">Temperature:</strong> @cattle.Temperature °</p>
+                            <p><strong class="info-label">Medication:</strong> @cattle.Medication</p>
+                            <p><strong class="info-label">Price:</strong> @cattle.Price PKR</p>
+                            <p><strong class="info-label">Date:</strong> @cattle.Date.ToString("dd-MM-yyyy")</p>
+                        </div>
+                        <div class="card-buttons animated fadeIn">
+                            <a href="@Url.Action("Update", "MaintainCattle", new { id = cattle.Id })" class="btn btn-primary">Edit</a>
+                            <button class="btn btn-primary" onclick="downloadCard('cattle-@cattle.Id')">Share</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+<script>
+    function downloadCard(cardId) {
+        var cardElement = document.getElementById(cardId);
+        var buttons = cardElement.getElementsByClassName('card-buttons')[0];
+        
+        buttons.style.display = 'none';
+
+        domtoimage.toBlob(cardElement)
+            .then(function(blob) {
+                var link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'card.png';
+                link.click();
+                buttons.style.display = 'block';
+            });
+    }
+</script>

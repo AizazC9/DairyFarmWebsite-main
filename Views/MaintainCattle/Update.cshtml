@@ -1,0 +1,85 @@
+@model DairyFarm.Models.UpdatedCattle
+
+<h1>Edit Cattle</h1>
+  
+   <form method="post" action="Update" class="animated-form">
+    <div class="form-col">
+        <label for="Id" class="form-label">Id</label>
+        <input type="number" class="form-control" id="Id" name="Id" asp-for="Id" readonly>
+    </div>
+    <div class="form-row">
+        <div class="form-col">
+            <label for="Tag" class="form-label">Tag</label>
+            <input type="text" class="form-control" id="Tag" name="Tag" asp-for="Tag" required>
+        </div>
+        <div class="form-col">
+            <label for="Age" class="form-label">Age</label>
+            <input type="number" class="form-control" id="Age" name="Age" asp-for="Age">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-col">
+            <label for="Weight" class="form-label">Weight</label>
+            <input type="number" class="form-control" id="Weight" name="Weight" asp-for="Weight">
+        </div>
+        <div class="form-col">
+            <label for="DailyMilk" class="form-label">Daily Milk</label>
+            <input type="number" class="form-control" id="DailyMilk" name="DailyMilk" asp-for="DailyMilk">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-col">
+            <label for="NormalDelivery" class="form-label">Normal Delivery</label>
+            <input type="number" class="form-control" id="NormalDelivery" name="NormalDelivery" asp-for="NormalDelivery">
+        </div>
+        <div class="form-col">
+            <label for="Abortion" class="form-label">Abortion</label>
+            <input type="number" class="form-control" id="Abortion" name="Abortion" asp-for="Abortion">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-col">
+            <label for="Diseases" class="form-label">Diseases</label>
+            <input type="text" class="form-control" id="Diseases" name="Diseases" asp-for="Diseases">
+        </div>
+        <div class="form-col">
+            <label for="DietPlan" class="form-label">Diet Plan</label>
+            <input type="text" class="form-control" id="DietPlan" name="DietPlan" asp-for="DietPlan">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-col">
+            <label for="Insemination" class="form-label">Bull Insemination</label>
+            <input type="text" class="form-control" id="Insemination" name="Insemination" asp-for="Insemination">
+        </div>
+        <div class="form-col">
+            <label for="Examination" class="form-label">Examination</label>
+            <input type="text" class="form-control" id="Examination" name="Examination" asp-for="Examination">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-col">
+            <label for="Temperature" class="form-label">Temperature</label>
+            <input type="text" class="form-control" id="Temperature" name="Temperature" asp-for="Temperature">
+        </div>
+        <div class="form-col">
+            <label for="Medication" class="form-label">Medication</label>
+            <input type="text" class="form-control" id="Medication" name="Medication" asp-for="Medication">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-col">
+            <label for="Price" class="form-label">Price</label>
+            <input type="number" class="form-control" id="Price" name="Price" asp-for="Price">
+        </div>
+        <div class="form-col">
+            <label for="Date" class="form-label">Date</label>
+            <input type="date" class="form-control" id="Date" name="Date" asp-for="Date">
+        </div>
+    </div>
+    <div class="form-buttons">
+        <button type="reset" class="btn btn-primary ">Reset</button>
+        <button type="submit" class="btn btn-primary ">Submit</button>
+        <button type="submit" class="btn btn-danger " asp-action="Delete" asp-controller="MaintainCattle">Delete</button>
+    </div>
+  </form>

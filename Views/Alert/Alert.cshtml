@@ -1,0 +1,96 @@
+@model List<DairyFarm.Models.Domain.Cattle>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        var notifications = [];
+
+        @foreach (var cow in Model)
+        {
+            if (cow.DailyMilk < 5)
+            {
+                @:addNotification("Cow Tag: @cow.Tag", "Daily milk is less than 5L. Change its diet.");
+            }
+
+            if (cow.Temperature < 80 || cow.Temperature > 100)
+            {
+                @:addNotification("Cow Tag: @cow.Tag", "Temperature is not within the normal range.");
+            }
+        }
+
+        function addNotification(tag, message) {
+            var notification = {
+                tag: tag,
+                message: message
+            };
+
+            notifications.push(notification);
+
+ 
+            updateNotificationsList();
+        }
+
+     
+        function updateNotificationsList() {
+            var notificationsList = $("#notifications-list");
+            var clearAllButton = $("#clear-all-button");
+
+ 
+            notificationsList.empty();
+
+  
+            notifications.forEach(function(notification, index) {
+                var listItem = $("<li>").addClass("notification-item")
+                    .text(notification.tag + ": " + notification.message)
+                    .on("click", function() {
+   
+                        notifications.splice(index, 1);
+
+                        updateNotificationsList();
+                    });
+
+                notificationsList.append(listItem);
+            });
+
+            
+            clearAllButton.toggle(notifications.length > 0);
+        }
+
+
+        function clearAllNotifications() {
+            notifications = [];
+
+            updateNotificationsList();
+        }
+
+        $("#clear-all-button").on("click", clearAllNotifications);
+    });
+</script>
+
+<style>
+    .notification-item {
+        cursor: pointer;
+        padding: 10px;
+        margin-bottom: 10px;
+        background-color: #f8f8f8;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    #clear-all-button {
+        display: none;
+        margin-top: 10px;
+        padding: 5px 10px;
+        background-color: #ff6b6b;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+</style>
+
+
+<ul id="notifications-list"></ul>
+
+<button id="clear-all-button">Clear All</button>
+
