@@ -134,3 +134,4 @@ C:\Users\lapto\OneDrive\Desktop\DairyFarmWebsite-main\DairyFarmWebsite-main\obj\
 C:\Users\lapto\OneDrive\Desktop\DairyFarmWebsite-main\DairyFarmWebsite-main\obj\Debug\net8.0\DairyFarm.pdb
 C:\Users\lapto\OneDrive\Desktop\DairyFarmWebsite-main\DairyFarmWebsite-main\obj\Debug\net8.0\DairyFarm.genruntimeconfig.cache
 C:\Users\lapto\OneDrive\Desktop\DairyFarmWebsite-main\DairyFarmWebsite-main\obj\Debug\net8.0\ref\DairyFarm.dll
+C:\Users\lapto\OneDrive\Desktop\DairyFarmWebsite-main\DairyFarmWebsite-main\obj\Debug\net8.0\DairyFarm.sourcelink.json

@@ -9,61 +9,54 @@
         {
             if (cow.DailyMilk < 5)
             {
-                @:addNotification("Cow Tag: @cow.Tag", "Daily milk is less than 5L. Change its diet.");
+                <text>
+                    notifications.push({
+                        tag: "Cow Tag: @cow.Tag",
+                        message: "Daily milk is less than 5L. Change its diet."
+                    });
+                </text>
             }
 
             if (cow.Temperature < 80 || cow.Temperature > 100)
             {
-                @:addNotification("Cow Tag: @cow.Tag", "Temperature is not within the normal range.");
+                <text>
+                    notifications.push({
+                        tag: "Cow Tag: @cow.Tag",
+                        message: "Temperature is not within the normal range."
+                    });
+                </text>
             }
         }
 
-        function addNotification(tag, message) {
-            var notification = {
-                tag: tag,
-                message: message
-            };
-
-            notifications.push(notification);
-
- 
-            updateNotificationsList();
-        }
-
-     
         function updateNotificationsList() {
             var notificationsList = $("#notifications-list");
             var clearAllButton = $("#clear-all-button");
 
- 
             notificationsList.empty();
 
-  
             notifications.forEach(function(notification, index) {
                 var listItem = $("<li>").addClass("notification-item")
                     .text(notification.tag + ": " + notification.message)
                     .on("click", function() {
-   
                         notifications.splice(index, 1);
-
                         updateNotificationsList();
                     });
 
                 notificationsList.append(listItem);
             });
 
-            
             clearAllButton.toggle(notifications.length > 0);
         }
 
-
         function clearAllNotifications() {
             notifications = [];
-
             updateNotificationsList();
         }
 
         $("#clear-all-button").on("click", clearAllNotifications);
+
+        // Initial update of notifications list
+        updateNotificationsList();
     });
 </script>
 
@@ -89,8 +82,6 @@
     }
 </style>
 
-
 <ul id="notifications-list"></ul>
 
 <button id="clear-all-button">Clear All</button>
-
